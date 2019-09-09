@@ -2,6 +2,7 @@ using Clean.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Clean.Data.Interfaces;
+using AutoMapper;
 
 namespace Clean.API
 {
@@ -21,6 +22,11 @@ namespace Clean.API
         public static void AddRepository(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped(typeof(IAppRepository<>), typeof(AppRepository<>));
+        }
+
+        public static void AddAutoMapperPackage(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddAutoMapper();
         }
     }
 }

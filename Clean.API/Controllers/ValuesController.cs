@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Clean.Data.Interfaces;
 using Clean.Data.Entities;
+using Clean.Data.Dtos;
+using AutoMapper;
 
 namespace Clean.API.Controllers
 {
@@ -13,9 +15,11 @@ namespace Clean.API.Controllers
     public class ValuesController : ControllerBase
     {
         private IAppRepository<Homes> _appRepo;
-        public ValuesController(IAppRepository<Homes> appRepo)
+        private readonly IMapper _mapper;
+        public ValuesController(IAppRepository<Homes> appRepo, IMapper mapper)
         {
             _appRepo = appRepo;
+            _mapper = mapper;
         }
 
         // GET api/values
@@ -35,13 +39,19 @@ namespace Clean.API.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<IActionResult> Post(Homes home)
+        public async Task<IActionResult> Post(HomeDto homeDto)
         {
-            _appRepo.Add(home);
+            if(ModelState.IsValid) {
+                var home = _mapper.Map<Homes>(homeDto);
 
-            await _appRepo.SaveAllAsync();
+                _appRepo.Add(home);
 
-            return Ok(home);
+                await _appRepo.SaveAllAsync();
+
+                return Ok(home);
+            }
+
+            return BadRequest("Objects values don't match");
         }
 
         // PUT api/values/5

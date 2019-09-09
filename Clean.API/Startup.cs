@@ -29,6 +29,8 @@ namespace Clean.API
 
             services.AddRepository();
 
+            services.AddAutoMapperPackage();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
