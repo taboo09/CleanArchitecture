@@ -1,0 +1,11 @@
+.vscode
+
+/clean.api/bin
+/clean.api/obj
+/clean.api/wwwroot
+
+/clean.Data/bin
+/clean.Data/obj
+
+/clean.Infrastructure/bin
+/clean.Infrastructure/obj
