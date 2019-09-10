@@ -26,15 +26,20 @@ namespace Clean.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            // return new string[] { "value1", "value2" };
             return Ok(await _appRepo.ListAllAsync());
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            if (id < 1) return BadRequest("Id hasn't been provided");
+
+            var home = await _appRepo.GetByIdAsync(id);
+
+            if (home == null) return NotFound(new { error = $"No home could be found with id: {id}" });
+
+            return Ok(home);
         }
 
         // POST api/values
@@ -44,14 +49,14 @@ namespace Clean.API.Controllers
             if(ModelState.IsValid) {
                 var home = _mapper.Map<Homes>(homeDto);
 
-                _appRepo.Add(home);
+                var newHome = _appRepo.Add(home);
 
                 await _appRepo.SaveAllAsync();
 
                 return Ok(home);
             }
 
-            return BadRequest("Objects values don't match");
+            return BadRequest("Validation error");
         }
 
         // PUT api/values/5
@@ -62,8 +67,19 @@ namespace Clean.API.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            if (id < 1) return BadRequest("Id hasn't been provided");
+
+            var home = await _appRepo.GetByIdAsync(id);
+
+            if (home == null) return NotFound(new { error = $"No home could be found with id: {id}" });
+
+            _appRepo.Delete(home);
+
+            await _appRepo.SaveAllAsync();
+
+            return Ok($"Home with id: {id} has been removed.");
         }
     }
 }

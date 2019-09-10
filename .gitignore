@@ -9,3 +9,6 @@
 
 /clean.Infrastructure/bin
 /clean.Infrastructure/obj
+
+/clean.api.tests/bin
+/clean.api.tests/obj
