@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Clean.Data.Interfaces;
 using Clean.Data.Entities;
@@ -26,7 +23,9 @@ namespace Clean.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _appRepo.ListAllAsync());
+            var list = await _appRepo.ListAllAsync();
+
+            return Ok(list);
         }
 
         // GET api/values/5

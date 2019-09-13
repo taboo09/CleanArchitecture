@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
 using Clean.API.Controllers;
 using Clean.API.Tests.Repository;
@@ -33,6 +31,7 @@ namespace Clean.API.Tests.Controllers
             _controller = new ValuesController(_appReo, _mapper);
             _newHome = new HomeDto()
             {
+                Id = 4,
                 Name = "Test",
                 City = "Liverpool",
                 Address = "7 Street",
@@ -60,7 +59,7 @@ namespace Clean.API.Tests.Controllers
             // Assert
             var items = Assert.IsType<List<Homes>>(result.Value);
 
-            Assert.Equal(2, items.Count);
+            Assert.Equal(3, items.Count);
         }
 
         [Fact]
@@ -80,7 +79,7 @@ namespace Clean.API.Tests.Controllers
         public async void GetById_UnknownId_ReturnsNotFound()
         {
             // Arrange
-            var id = 4;
+            var id = 5;
 
             // Act
             var notFoundResult = await _controller.Get(id) as NotFoundObjectResult;
@@ -158,7 +157,7 @@ namespace Clean.API.Tests.Controllers
         public void Delete_NegativeOrZeroId_ReturnsBadRequest()
         {
             // Arrange
-            var id = -1;
+            var id = 0;
 
             // Act
             var badRequestResult = _controller.Delete(id).Result as BadRequestObjectResult;
@@ -204,7 +203,7 @@ namespace Clean.API.Tests.Controllers
             var listCount = (await _appReo.ListAllAsync()).Count;
 
             // Assert
-            Assert.Equal(1, listCount);
+            Assert.Equal(2, listCount);
         }
     }
 }

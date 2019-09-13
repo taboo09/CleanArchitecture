@@ -3,52 +3,48 @@ using System.Threading.Tasks;
 using Clean.Data.Entities;
 using Clean.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Linq;
+using Clean.API.Tests.Data;
+using Clean.Infrastructure.Persistence;
 
 namespace Clean.API.Tests.Repository
 {
     public class AppRepositoryFake : IAppRepository<Homes>
     {
-        private List<Homes> _homes;
+        private CareHomeContext _dbContext;
         public AppRepositoryFake()
         {
-            _homes = new List<Homes>()
-            {
-                new Homes() { Id = 1, Name = "Test1", City = "Lichfield", Address = "34 Road", Email = "test@test.com", Rating = 4 },
-                new Homes() { Id = 2, Name = "Test2", City = "London", Address = "6 Street", Email = "test@test.com", Rating = 5 }
-            };
+            _dbContext = new DbContextMocker().SetDbContext<Homes>();
         }
 
         public async Task<IReadOnlyList<Homes>> ListAllAsync()
         {
-            await Task.Delay(100);
-
-            return _homes;
+            var list = await _dbContext.Homes.ToListAsync();
+            
+            return list;
         }
 
         public Homes Add(Homes entity)
         {
-            _homes.Add(entity);
-
+            _dbContext.Homes.Add(entity);
+            
             return entity;
         }
 
         public void  Delete(Homes entity)
         {
-            _homes.Remove(entity);
+            _dbContext.Homes.Remove(entity);
         }
 
         public async Task<Homes> GetByIdAsync(int id)
         {
-            await Task.Delay(100);
+            var obj = await _dbContext.Homes.FirstOrDefaultAsync(x => x.Id == id);
 
-            return _homes.FirstOrDefault(x => x.Id == id);
+            return obj;
         }  
 
         public async Task SaveAllAsync()
         {
-            await Task.Delay(100);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
