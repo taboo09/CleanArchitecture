@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Clean.API.Controllers;
+using Clean.API.Tests.Data;
 using Clean.API.Tests.Repository;
 using Clean.Data.Dtos;
 using Clean.Data.Entities;
 using Clean.Data.Interfaces;
-using Clean.Infrastructure.Mapping;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
@@ -20,13 +20,7 @@ namespace Clean.API.Tests.Controllers
 
         public ValuesControllerTest()
         {
-            //auto mapper configuration
-            var mockMapper = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MapperProfile());
-            });
-            _mapper = mockMapper.CreateMapper();
-
+            _mapper = MapperMock.MapperProfileTest();
             _appReo = new AppRepositoryFake();
             _controller = new ValuesController(_appReo, _mapper);
             _newHome = new HomeDto()
