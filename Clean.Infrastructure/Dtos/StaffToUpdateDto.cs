@@ -1,6 +1,6 @@
 using System;
 
-namespace Clean.Data.Dtos
+namespace Clean.Infrastructure.Dtos
 {
     public class StaffToUpdateDto
     {

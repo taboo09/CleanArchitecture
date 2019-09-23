@@ -3,9 +3,9 @@ using AutoMapper;
 using Clean.API.Controllers;
 using Clean.API.Tests.Data;
 using Clean.API.Tests.Repository;
-using Clean.Data.Dtos;
 using Clean.Data.Entities;
 using Clean.Data.Interfaces;
+using Clean.Infrastructure.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 

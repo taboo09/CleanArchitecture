@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Clean.Data.Dtos
+namespace Clean.Infrastructure.Dtos
 {
     public class QualDto
     {

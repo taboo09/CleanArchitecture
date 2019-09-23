@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Clean.Data.Interfaces;
 using Clean.Data.Entities;
-using Clean.Data.Dtos;
+using Clean.Infrastructure.Dtos;
 using AutoMapper;
 
 namespace Clean.API.Controllers

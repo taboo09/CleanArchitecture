@@ -1,5 +1,5 @@
 using AutoMapper;
-using Clean.Data.Dtos;
+using Clean.Infrastructure.Dtos;
 using Clean.Data.Entities;
 
 namespace Clean.Infrastructure.Mapping
